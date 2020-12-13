@@ -1,0 +1,25 @@
+Unzip Instructions:
+Unzip MMTMyPortWebApp.zip using any of archieve manipulating softwares like 7zip,winzip,winrar..etc
+
+Prerequisites:
+1. Apache Tomcat 8
+2. MySQL database with mmt table
+
+To Deploy webapp on to Server:
+1.WAR is optimized for Apache Tomcat 8.0
+2.Download tomcat if already not available
+3.Unzip tomcat, go to apache-tomcat-x.x.xx/webapps
+4.Unzip/Open MMTMyPortWebApp.war using 7-zip and go to WEB-INF\classes\dbprops.properties and edit database properties to point to schema containing mmt table.
+5.Place MMTMyPortWebApp.war file to the folder and  go to apache-tomcat-x.x.xx/bin folder
+6.Run startup.bat
+7.Open Browser and type in http://localhost:8080/MMTMyPortWebApp/ and click Enter
+
+PS: If 8080 is already used, please change port numbers in apache-tomcat-x.x.xx/conf/settings.xml
+
+To view Source files and to setup project in eclipse:
+1. Open Eclipse
+2. Add Apache tomcat server by following instructions in Eclipse Server view
+3. Go to File->Import->Existing Projects into Workspace->Choose MMTMyPortWebApp folder from the unzipped directory and finish import.
+4. Go to src->dbprops.properties file and change mysql url,username and password to point to mysql database containing mmt table with values.
+5. Make sure Project build path and facets matches the workspace preferences.
+6. Right click on the project and select Run as->Run on Server->Select Tomcat 8 and click on finish.

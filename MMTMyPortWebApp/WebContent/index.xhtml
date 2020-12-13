@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+<h:head>
+	<style>
+.ui-panelgrid .ui-panelgrid-cell {
+	border-style: none;
+	border: none;
+	!
+	important;
+}
+</style>
+	<title>MyPort - One stop search for airports</title>
+	<link rel="shortcut icon" type="image/x-icon"
+		href="#{resource['images/mmtmpfavicon.png']}" />
+	<h:outputStylesheet library="css" name="myportstyles.css" />
+	<h:outputScript library="js" name="myportscripts.js" />
+	<f:event type="preRenderView" listener="#{myPort.fetchPortDetails}" />
+</h:head>
+<h:body>
+	<p:layout fullPage="true">
+		<p:layoutUnit position="north" size="119">
+			<h:graphicImage library="images" name="logo.png" />
+		</p:layoutUnit>
+
+		<p:layoutUnit position="west" size="400" header="Filters and Sorting"
+			resizable="true" closable="true" collapsible="true">
+			<h:form>
+				<p:panel id="basic" header="Type">
+					<p:selectManyCheckbox id="typebasedfilter" onchange="submit()"
+						value="#{myPort.selectedPortType}" layout="grid" columns="1">
+						<f:selectItems value="#{myPort.portType}" var="type"
+							itemLabel="#{type}" itemValue="#{type}" />
+					</p:selectManyCheckbox>
+				</p:panel>
+
+			</h:form>
+			<br />
+			<h:form>
+				<p:panel id="basic" header="Sort By">
+					<p:selectOneRadio id="sortByVal" onchange="submit()" value="#{myPort.sortBy}"
+						layout="grid" columns="1">
+						<f:selectItem itemLabel="Elevation" itemValue="elev" />
+						<f:selectItem itemLabel="Direct Flight" itemValue="direct_flights" />
+						<f:selectItem itemLabel="Rating" itemValue="rating" />
+					</p:selectOneRadio>
+				</p:panel>
+			</h:form>
+		</p:layoutUnit>
+
+		<p:layoutUnit position="center">
+			<h:form>
+				<p:messages id="messages" showDetail="true" autoUpdate="true"
+					closable="true" />
+				<p:dataTable var="port" value="#{myPort.portTableDtls}" rows="10"
+					paginator="true"
+					currentPageReportTemplate="Displaying {startRecord} - {endRecord} of {totalRecords}"
+					paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+					rowsPerPageTemplate="5,10,15,20,50" widgetVar="portTable"
+					emptyMessage="No ports found with given criteria"
+					filteredValue="#{myPort.filteredPortTableDtl}"
+					expandedRow="#{true}">
+
+					<f:facet name="header">
+						<p:outputPanel>
+							<h:outputText value="Search all fields :  " />
+							<p:inputText id="globalFilter" onkeyup="PF('portTable').filter()"
+								style="width:350px"
+								placeholder="Search(by name,code or country)" />
+						</p:outputPanel>
+					</f:facet>
+					<p:column filterBy="#{port.name}" headerText="Name"
+						filterMatchMode="contains">
+						<h:outputText value="#{port.name}" />
+					</p:column>
+
+					<p:column filterBy="#{port.code}" headerText="Code"
+						filterMatchMode="contains">
+						<h:outputText value="#{port.code}" />
+					</p:column>
+
+					<p:column filterBy="#{port.country}" headerText="Country"
+						filterMatchMode="contains">
+						<h:outputText value="#{port.country}" />
+					</p:column>
+
+					<p:rowExpansion>
+						<p:panelGrid columns="3" columnClasses="label,value"
+							style="width:1530px">
+							<p:row>
+								<p:column rowspan="3">
+									<p:graphicImage library="images"
+										name="png250px/#{port.imgName}.png" />
+								</p:column>
+
+							</p:row>
+							<p:row>
+								<p:column rowspan="2">
+									<h:outputText style="font-weight: bold;font-size:30px;"
+										value="#{port.name}" />
+								</p:column>
+								<p:column>
+									<p:rating value="#{port.rating}" readonly="true" />
+								</p:column>
+							</p:row>
+
+							<p:row>
+								<p:column>
+									<h:outputText value="#{port.city}, #{port.country}" />
+								</p:column>
+								<br />
+								<p:column>
+									<h:outputText value="Elevation :  #{port.elev} ft" />
+								</p:column>
+								<br />
+								<p:column>
+									<h:outputText value="Direct Flight :  #{port.direct_flights}" />
+								</p:column>
+								<br />
+							</p:row>
+						</p:panelGrid>
+					</p:rowExpansion>
+				</p:dataTable>
+			</h:form>
+		</p:layoutUnit>
+	</p:layout>
+</h:body>
+</html>

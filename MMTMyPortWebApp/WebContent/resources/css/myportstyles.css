@@ -1,0 +1,31 @@
+@CHARSET "ISO-8859-1";
+@import url(https://fonts.googleapis.com/css?family=Slabo+27px);
+body{
+}
+.ui-widget, .ui-widget .ui-widget {
+	font-family: 'Slabo 27px', serif;
+    font-size: 17px;
+}
+.ui-outputpanel.ui-widget{
+	font-weight:300;
+}
+span.ui-layout-unit-header-title{
+	font-weight:300;
+}
+
+.ui-datatable-header, .ui-datatable .ui-datatable-footer {
+text-align:left;	
+}
+.ui-datatable.borderless thead th,
+.ui-datatable.borderless tbody,
+.ui-datatable.borderless tbody tr,
+.ui-datatable.borderless tbody td {
+    border-style: none;
+     border: none; !important;
+}
+
+.ui-datatable thead th, .ui-datatable tbody td, .ui-datatable tfoot td, .ui-datatable tfoot th{
+	border-style: none;
+    border: none; !important;
+}
+
